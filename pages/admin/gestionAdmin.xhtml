@@ -1,0 +1,308 @@
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/template/template1.xhtml">
+
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="adminhome" value="Accueil" /></li>
+					<li><p:link outcome="/pages/auth/ecos" value="L'ecos" /></li>
+					<li><p:link outcome="/pages/auth/contact" value="Contact" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="nav navbar-nav2">
+					<li><p:link outcome="gestionEnseignants" value="Enseignants"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);" rendered="#{adminMB.identite.auto_en}"/></li>
+					<li><p:link outcome="gestionEtudiants" value="Etudiants"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);" rendered="#{adminMB.identite.auto_et}"/></li>
+					<li><p:link outcome="gestionExamens"
+							value="Sessions d'examens"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);" rendered="#{adminMB.identite.auto_ex}"/></li>
+					<li><p:link outcome="gestionAdmin" value="Administrateurs"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);" rendered="#{adminMB.identite.auto_admin}"/></li>
+				</ul>
+			</div>
+		</div>
+	</ui:define>
+
+
+	<ui:define name="row2">
+		<div class="row">
+			<div class="box" style="padding: 15px 5px !important">
+				<div class="col-lg-12">
+					<h:form id="form1">
+						<h:panelGrid layout="grid" columns="9">
+							<p:column>
+								<p:outputLabel value="Ajouter : "
+									styleClass="intro-text2" style="margin-left:20px;" />
+							</p:column>
+							<p:column>
+								<p:spacer width="20" height="20" />
+							</p:column>
+							<p:column>
+								<p:inputText id="cin" value="#{adminMB.admin.cin}"
+									required="true" requiredMessage="Cin requis"
+									converterMessage="Cin invalide" style="width:230px;"/>
+								<p:watermark for="cin" value="CIN" id="watermark" />
+								<p:message for="cin" />
+							</p:column>
+							<p:column>
+								<p:spacer width="10" height="10" />
+							</p:column>
+							<p:column>
+								<p:inputText id="pwd" value="#{adminMB.admin.pwd}"
+									required="true" requiredMessage="Password requis" style="width:230px;"/>
+								<p:watermark for="pwd" value="Password" id="watermark2" />
+								<p:message for="pwd" />
+							</p:column>
+							<p:column>
+								<p:spacer width="10" height="10" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="gA" value="#{adminMB.admin.auto_admin}"
+									style="width:230px;padding-right:0px;margin-top:3px"
+									required="true" requiredMessage="Choix requis">
+									<f:selectItem itemLabel="Gestion des admins?"
+										itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItem itemLabel="Oui" itemValue="#{true}" />
+									<f:selectItem itemLabel="Non" itemValue="#{false}" />
+								</p:selectOneMenu>
+								<p:message for="gA" />
+							</p:column>
+
+							<p:column>
+								<p:spacer width="10" height="10" />
+							</p:column>
+														<p:column>
+								<p:selectOneMenu id="gEt" value="#{adminMB.admin.auto_et}"
+									style="width:230px;padding-right:0px;margin-top:3px"
+									required="true" requiredMessage="Choix requis">
+									<f:selectItem itemLabel="Gestion des étudiants?"
+										itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItem itemLabel="Oui" itemValue="#{true}" />
+									<f:selectItem itemLabel="Non" itemValue="#{false}" />
+								</p:selectOneMenu>
+								<p:message for="gEt" />
+							</p:column>
+							
+							<p:column>
+								<p:spacer />
+							</p:column>
+							<p:column>
+								<p:spacer />
+							</p:column>
+
+
+							<p:column>
+								<p:selectOneMenu id="gEn" value="#{adminMB.admin.auto_en}"
+									style="width:230px;padding-right:0px;margin-top:4px"
+									required="true" requiredMessage="Choix requis">
+									<f:selectItem itemLabel="Gestion des enseignants?"
+										itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItem itemLabel="Oui" itemValue="#{true}" />
+									<f:selectItem itemLabel="Non" itemValue="#{false}" />
+								</p:selectOneMenu>
+								<p:message for="gEn" />
+							</p:column>
+							<p:column>
+								<p:spacer />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="gEx" value="#{adminMB.admin.auto_ex}"
+									style="width:230px;padding-right:0px;margin-top:4px"
+									required="true" requiredMessage="Choix requis">
+									<f:selectItem itemLabel="Gestion des examens?"
+										itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItem itemLabel="Oui" itemValue="#{true}" />
+									<f:selectItem itemLabel="Non" itemValue="#{false}" />
+								</p:selectOneMenu>
+								<p:message for="gEx" />
+							</p:column>
+
+
+							<p:column>
+								<p:spacer />
+							</p:column>
+
+
+							<p:column>
+								<p:commandButton id="btn_reset" value="Réinitialiser"
+									type="reset" icon="ui-icon-trash" style="width:230px;margin-top:0px;"/>
+							</p:column>
+							<p:column>
+								<p:spacer />
+							</p:column>
+							<p:column>
+								<p:commandButton id="btn_add" value="Ajouter"
+									update=":form :form1" action="#{adminMB.ajouterAdmin()}"
+									icon="ui-icon-plus" validateClient="true" style="width:230px;margin-top:0px;">
+								</p:commandButton>
+							</p:column>
+						
+						</h:panelGrid>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+
+	<ui:define name="row3">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<h:form id="form">
+						<p:growl id="message1" showDetail="true" />
+						<p:dataTable id="tbl" value="#{adminMB.admins}" var="ad"
+							border="1" emptyMessage="Aucun admin dans la base"
+							editable="true" rowKey="#{ad.id}" style="width:100%">
+
+							<f:facet name="header">
+          						 Administrateurs à la faculté de médecine de Sfax
+							</f:facet>
+
+							<p:columnGroup type="header">
+								<p:row>
+									<p:column rowspan="2" headerText="CIN" filterBy="#{ad.cin}"
+										 />
+									<p:column rowspan="2" headerText="Password" filterBy="#{ad.pwd}" />
+
+									<p:column colspan="4" headerText="Gestion"
+										style="width:500px" />
+									<p:column rowspan="2" style="width:35px" exportable="false" />
+									<p:column rowspan="2" style="width:50px" exportable="false" />
+								</p:row>
+								<p:row>
+									<p:column headerText="Admins" />
+									<p:column headerText="Etudiants" />
+									<p:column headerText="Enseignants" />
+									<p:column headerText="Examens" />
+								</p:row>
+							</p:columnGroup>
+
+
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ad.cin}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{ad.cin}" style="width:100%"
+											required="true" requiredMessage="Cin requis"
+											converterMessage="Cin invalide" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column >
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ad.pwd}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{ad.pwd}" style="width:100%"
+											required="true" requiredMessage="Password requis" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+														<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ad.auto_admin}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:selectBooleanCheckbox value="#{ad.auto_admin}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+																					<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ad.auto_et}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:selectBooleanCheckbox value="#{ad.auto_et}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+																					<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ad.auto_en}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:selectBooleanCheckbox value="#{ad.auto_en}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+																					<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ad.auto_ex}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:selectBooleanCheckbox value="#{ad.auto_ex}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:ajax event="rowEdit" listener="#{adminMB.modifierAdmin}"
+								update=":form:tbl :form:message1" />
+							<p:ajax event="rowEditCancel" />
+							<p:column style="width:35px" exportable="false">
+								<p:rowEditor />
+							</p:column>
+
+							<p:column style="width:50px" exportable="false">
+								<p:commandLink actionListener="#{adminMB.supprimerAdmin(ad.id)}"
+									title="Supp" update=":form" rendered="#{ad.id ne 1}">
+									<p:graphicImage value="/resources/img/ad.png"
+										style="width:30px;height:auto" />
+									<p:confirm header="Suppression"
+										message="Confirmer la suppression?" icon="ui-icon-alert" />
+								</p:commandLink>
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="Oui" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Non" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-cancel"
+										style="float:right !important" />
+								</p:confirmDialog>
+							</p:column>
+
+							<f:facet name="footer">
+        					 #{adminMB.admins.size()} admin(s) en total.
+   				 			</f:facet>
+						</p:dataTable>
+												<script type="text/javascript">
+    $('input.ui-column-filter').attr('placeholder','Rechercher');
+</script>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,291 @@
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/template/template1.xhtml">
+
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="enshome" value="Accueil" /></li>
+					<li><p:link outcome="/pages/auth/ecos" value="L'ecos" /></li>
+					<li><p:link outcome="/pages/auth/contact" value="Contact" /></li>
+					<li><p:link outcome="ensProfile" value="Profile" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="nav navbar-nav2">
+					<li><p:link outcome="ajoutStation" value="Déposer une station"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="gererStation" value="Vos stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="choixExamens" value="Les examens"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duJury}" /></li>
+					<li><p:link outcome="lisStations" value="Les stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duJury or enseignMB.duComite}" /></li>
+					<li><p:link outcome="epreuves" value="Les résultats"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duComite}" /></li>
+				</ul>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="row2">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+
+					<f:metadata>
+						<f:viewParam name="id" value="#{enseignMB.ids}" />
+						<f:event type="preRenderView"
+							listener="#{enseignMB.afficherStation()}" />
+					</f:metadata>
+
+					<h:form id="form1">
+					<p:growl id="message1" showDetail="true" />
+						<p:panelGrid id="affich"
+							style="margin:0px auto;width:100%;margin-bottom:30px;margin-top:30px">
+							<p:row>
+								<p:column style="width:20%">
+									<strong> Domaine: </strong>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{enseignMB.station.domaine}" />
+								</p:column>
+								<p:column style="width:15%">
+									<strong> Système: </strong>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{enseignMB.station.systeme}" />
+								</p:column>
+								<p:column style="width:15%">
+									<strong> Plainte: </strong>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{enseignMB.station.plainte}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<strong> Simulation: </strong>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{enseignMB.station.simulation}" />
+								</p:column>
+								<p:column>
+									<strong> Objets: </strong>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{enseignMB.station.moyenSimulation}" />
+								</p:column>
+								<p:column>
+									<strong> Contexte: </strong>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{enseignMB.station.contexte}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<strong> Compétences: </strong>
+								</p:column>
+								<p:column colspan="5">
+									<h:outputText value="#{enseignMB.station.competence}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="6" styleClass="ui-widget-header">
+									<p:spacer height="0" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<strong> Auteurs: </strong>
+								</p:column>
+								<p:column colspan="5">
+									<p:dataList value="#{enseignMB.auteursStat}" var="a"
+										styleClass="datalist-noborder" emptyMessage="Aucun auteur">
+   											 #{a.nom} #{a.prenom} ( cin : #{a.cin}, Grade : #{a.grade}, Affiliation : #{a.affiliation} )
+    									</p:dataList>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<strong> Situation clinique </strong>
+								</p:column>
+								<p:column colspan="5">
+									<h:outputText value="#{enseignMB.station.situationClinique}"
+										styleClass="outputLabel" style="white-space: pre-wrap" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="6" styleClass="ui-widget-header">
+									<p:spacer height="0" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<strong> Instructions au candidat: </strong>
+								</p:column>
+								<p:column colspan="5">
+									<p:commandLink value="Afficher" type="button"
+										onclick="PF('dlg1').show();"
+										style="text-decoration: underline;" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<strong> Instructions au patient: </strong>
+								</p:column>
+								<p:column colspan="5">
+									<p:commandLink value="Afficher" type="button"
+										onclick="PF('dlg2').show();"
+										style="text-decoration: underline;"
+										rendered="#{enseignMB.station.instrucPS ne null}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<strong> Instructions au médecin: </strong>
+								</p:column>
+								<p:column colspan="5">
+									<p:commandLink value="Afficher" type="button"
+										onclick="PF('dlg3').show();"
+										style="text-decoration: underline;"
+										rendered="#{enseignMB.station.instrucMO ne null}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="6" styleClass="ui-widget-header">
+									<p:spacer height="0" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<strong> Matériel à préparer: </strong>
+								</p:column>
+								<p:column colspan="5">
+									<h:outputText value="#{enseignMB.station.materiel}"
+										styleClass="outputLabel" style="white-space: pre-wrap" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<strong> Fichier: </strong>
+								</p:column>
+								<p:column colspan="5">
+									<p:commandLink
+										value="Télécharger #{enseignMB.station.fichier_joint.fileName}"
+										ajax="false" style="text-decoration: underline;"
+										rendered="#{enseignMB.station.fichier_joint ne null}">
+										<p:fileDownload
+											value="#{enseignMB.fileDownload(enseignMB.station.fichier_joint)}" />
+									</p:commandLink>
+
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="6" styleClass="ui-widget-header">
+									<p:spacer height="0" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<strong> Grille: </strong>
+								</p:column>
+								<p:column colspan="5">
+									<p:commandLink value="Afficher" type="button"
+										onclick="PF('dlg4').show();"
+										style="text-decoration: underline;" />
+								</p:column>
+							</p:row>
+
+						</p:panelGrid>
+
+						<p:commandButton value="Pdf"
+							action="#{enseignMB.stationToPdf()}" style="float:right"
+							icon="ui-icon-check" update=":form1:message1 :form1" />
+
+
+						<p:dialog header="Instructions aux candidats" widgetVar="dlg1"
+							modal="true" position="center center" resizable="false"
+							width="900px" height="550px">
+							<h:outputText value="#{enseignMB.station.instrucCandidat}"
+								style="white-space: pre-wrap" />
+						</p:dialog>
+						<p:dialog header="Instructions aux patients simulés"
+							widgetVar="dlg2" modal="true" position="center center"
+							resizable="false" width="900px" height="550px">
+							<h:outputText value="#{enseignMB.station.instrucPS}"
+								style="white-space: pre-wrap" />
+						</p:dialog>
+						<p:dialog header="Instructions aux médecins observateurs"
+							widgetVar="dlg3" modal="true" position="center center"
+							resizable="false" width="900px" height="550px">
+							<h:outputText value="#{enseignMB.station.instrucMO}"
+								style="white-space: pre-wrap" />
+						</p:dialog>
+						<p:dialog header="Fichier joint" widgetVar="dlg5" modal="true"
+							position="center center" resizable="false" width="900px"
+							height="550px">
+							<p:graphicImage value="#{enseignMB.dbImage}"
+								rendered="#{enseignMB.station.fichier_joint.contentType eq 'image/jpeg' || enseignMB.station.fichier_joint.contentType eq 'image/png' || enseignMB.station.fichier_joint.contentType eq 'image/gif'  }" />
+						</p:dialog>
+
+
+						<p:dialog id="grll" header="Grille de pondération"
+							widgetVar="dlg4" modal="true" position="center center"
+							resizable="false" width="900px" height="550px">
+							<ui:repeat value="#{enseignMB.itemsDesObjectifs}" var="obj">
+								<p:panelGrid style="width:100%">
+
+
+									<p:row>
+										<p:column styleClass="ui-widget-header">
+												#{obj.get(0).objectif.objectif} 
+										</p:column>
+										<p:column styleClass="ui-widget-header">
+												 #{obj.get(0).objectif.ponderation} 
+										</p:column>
+									</p:row>
+									<ui:repeat var="it" value="#{obj}">
+										<p:row>
+											<p:column>
+												<h:outputText value="#{it.description}" />
+											</p:column>
+											<p:column style="width:6%">
+												<h:outputText value="#{it.ponderation}" />
+											</p:column>
+										</p:row>
+									</ui:repeat>
+								</p:panelGrid>
+							</ui:repeat>
+
+						</p:dialog>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

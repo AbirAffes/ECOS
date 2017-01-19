@@ -1,0 +1,139 @@
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/template/template1.xhtml">
+
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="enshome" value="Accueil" /></li>
+					<li><p:link outcome="/pages/auth/ecos" value="L'ecos" /></li>
+					<li><p:link outcome="/pages/auth/contact" value="Contact" /></li>
+					<li><p:link outcome="ensProfile" value="Profile" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="nav navbar-nav2">
+					<li><p:link outcome="ajoutStation" value="Déposer une station"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="gererStation" value="Vos stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="choixExamens" value="Les examens"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" rendered="#{enseignMB.duJury}"/></li>
+					<li><p:link outcome="lisStations" value="Les stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" rendered="#{enseignMB.duJury or enseignMB.duComite}"/></li>
+					<li><p:link outcome="epreuves" value="Les résultats"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duComite}" /></li>
+				</ul>
+			</div>
+		</div>
+	</ui:define>
+
+
+	<ui:define name="row2">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+				
+				<f:metadata>
+						
+						<f:viewAction action="#{enseignMB.listExamJury()}" />
+					</f:metadata>
+				
+					<h:form id="form">
+						<p:growl id="message1" showDetail="true" />
+						<p:dataTable id="tbl" value="#{enseignMB.examensIdentIsJury}"
+							var="e" border="1" emptyMessage="Aucun examen dans la base"
+							 filteredValue="#{enseignMB.examensFiltres}"
+							rowKey="#{e.id}" style="width:100%">
+							<f:facet name="header">
+          						 La liste des examens ECOS
+							</f:facet>
+
+							<p:column headerText="Domaine" filterBy="#{e.domaine}"
+								style="width:120px">
+								
+									
+										<h:outputText value="#{e.domaine}" />
+					
+							</p:column>
+
+							<p:column headerText="Date" filterBy="#{e.date}"
+								style="width:120px">
+								
+										<h:outputText value="#{e.date}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+								
+							</p:column>
+
+							<p:column headerText="Horaire" filterBy="#{e.horaire}"
+								style="width:120px">
+								
+										<h:outputText value="#{e.horaire}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+									
+							</p:column>
+
+							<p:column headerText="Stations" style="width:150px">
+								
+									
+										<p:commandButton icon="ui-icon-arrow-4-diag" process="@this"
+											update="dialog1" oncomplete="PF('dlg1').show();"
+											actionListener="#{enseignMB.listStationsEx(e)}" />
+										<p:dialog id="dialog1" header="Les stations" widgetVar="dlg1"
+											minHeight="40" closable="true">
+											<p:dataList value="#{enseignMB.stationsEx}" var="s"
+												styleClass="datalist-noborder" emptyMessage="Aucune station">
+       									 ID:#{s.id} / Domaine: #{s.domaine} / Système:#{s.systeme}
+   										 </p:dataList>
+										</p:dialog>
+									
+								
+								
+							</p:column>
+
+							<p:column style="width:150px" exportable="false"
+								headerText="Choix des stations">
+								<h:link outcome="choixStations">
+									<p:graphicImage value="/resources/img/edit.png"
+										style="width:30px;height:auto" />
+									<f:param name="id" value="#{e.id}" />
+								</h:link>
+							</p:column>
+
+							<f:facet name="footer">
+        					 #{enseignMB.examensProchains.size()} examen(s) en total.
+   				 			</f:facet>
+						</p:dataTable>
+
+						<script type="text/javascript">
+    $('input.ui-column-filter').attr('placeholder','Rechercher');
+</script>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

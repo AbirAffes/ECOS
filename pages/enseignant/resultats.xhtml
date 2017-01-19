@@ -1,0 +1,108 @@
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/template/template1.xhtml">
+
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="enshome" value="Accueil" /></li>
+					<li><p:link outcome="/pages/auth/ecos" value="L'ecos" /></li>
+					<li><p:link outcome="/pages/auth/contact" value="Contact" /></li>
+					<li><p:link outcome="ensProfile" value="Profile" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="nav navbar-nav2">
+					<li><p:link outcome="ajoutStation" value="Déposer une station"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="gererStation" value="Vos stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="choixExamens" value="Les examens"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" rendered="#{enseignMB.duJury}"/></li>
+					<li><p:link outcome="lisStations" value="Les stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" rendered="#{enseignMB.duJury or enseignMB.duComite}"/></li>
+					<li><p:link outcome="epreuves" value="Les résultats"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duComite}" /></li>
+				</ul>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="row2">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+
+					<f:metadata>
+						<f:viewParam name="idE" value="#{enseignMB.idE}" />
+						<f:viewParam name="idSt" value="#{enseignMB.idSt}" />
+						<f:event type="preRenderView"
+							listener="#{enseignMB.afficherResultat()}" />
+					</f:metadata>
+
+					<h:form id="form">
+						<p:dataTable id="tbl" value="#{enseignMB.epreuves}" var="e"
+							border="1" emptyMessage="Aucune epreuve enregistrée"
+							editable="true" filteredValue="#{enseignMB.epreuvesFiltres}"
+							rowKey="#{e.id}" style="width:100%">
+							<f:facet name="header">
+          						 La liste des Epreuves
+          			 				
+							</f:facet>
+
+							<p:column headerText="Candidat">
+								<h:outputText
+									value="#{e.candidat.nom} #{e.candidat.prenom} (CIN:#{e.candidat.cin})" />
+							</p:column>
+							<p:column headerText="Médecin Observateur">
+								<h:outputText
+									value="#{e.medecinOb.nom} #{e.medecinOb.prenom} (CIN:#{e.medecinOb.cin})" />
+							</p:column>
+							<p:column headerText="Patient simulé">
+								<h:outputText
+									value="#{e.patientS.nom} #{e.patientS.prenom} (CIN:#{e.patientS.cin})" />
+							</p:column>
+							<p:column headerText="Score">
+								<h:outputText value="#{e.score}" />
+							</p:column>
+							<p:column headerText="Evaluation globale">
+								<h:outputText value="#{e.evalGlobale}" />
+							</p:column>
+							<p:column headerText="Remarques">
+								<h:outputText value="#{e.commentaires}" />
+							</p:column>
+
+							<f:facet name="footer">
+        					 #{enseignMB.epreuves.size()} epreuve(s) en total.
+   				 			</f:facet>
+						</p:dataTable>
+
+						<script type="text/javascript">
+    $('input.ui-column-filter').attr('placeholder','Rechercher');
+</script>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

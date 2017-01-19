@@ -1,0 +1,149 @@
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/template/template1.xhtml">
+
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="enshome" value="Accueil" /></li>
+					<li><p:link outcome="/pages/auth/ecos" value="L'ecos" /></li>
+					<li><p:link outcome="/pages/auth/contact" value="Contact" /></li>
+					<li><p:link outcome="ensProfile" value="Profile" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="nav navbar-nav2">
+					<li><p:link outcome="ajoutStation" value="Déposer une station"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="gererStation" value="Vos stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="choixExamens" value="Les examens"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duJury}" /></li>
+					<li><p:link outcome="lisStations" value="Les stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duJury or enseignMB.duComite}" /></li>
+					<li><p:link outcome="epreuves" value="Les résultats"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duComite}" /></li>
+				</ul>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="row2">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<h:form id="form">
+						<p:growl id="message1" showDetail="true" />
+						<p:dataTable id="tbl" value="#{enseignMB.stations}" var="e"
+							border="1" emptyMessage="Aucune station dans la base"
+							editable="true" filteredValue="#{enseignMB.stationsFiltres}"
+							rowKey="#{e.id}" style="width:100%">
+							<f:facet name="header">
+          						 La liste des stations ECOS
+          			 				
+							</f:facet>
+
+							<p:column headerText="ID" style="width:50px">
+								<h:outputText value="#{e.id}" />
+							</p:column>
+							<p:column headerText="Date-Création" style="width:150px">
+								<h:outputText value="#{e.date}">
+									<f:convertDateTime pattern="dd-MM-yyyy 'à' HH:mm " />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Domaine" filterBy="#{e.domaine}"
+								style="width:100px">
+								<h:outputText value="#{e.domaine}" />
+							</p:column>
+							<p:column headerText="Système" filterBy="#{e.systeme}"
+								style="width:80px">
+								<h:outputText value="#{e.systeme}" />
+							</p:column>
+							<p:column headerText="Validation" filterBy="#{e.valide}"
+								style="width:80px">
+								<h:outputText value="#{e.valide}" />
+							</p:column>
+							<p:column headerText="Auteurs" style="width:120px">
+								<p:dataList value="#{e.auteurs}" var="a"
+									styleClass="datalist-noborder" emptyMessage="Aucun auteur">
+        							#{a.nom}, #{a.prenom} (cin: #{a.cin})
+   								 </p:dataList>
+							</p:column>
+							<p:column style="width:60px" headerText="Validation"
+								exportable="false" rendered="#{enseignMB.duComite}">
+								<p:commandLink update=":form"
+									actionListener="#{enseignMB.validerS(e.id)}"
+									rendered="#{not e.valide}">
+									<p:graphicImage value="/resources/img/valide.png"
+										style="width:30px;height:auto" />
+									<p:confirm header="Validation"
+										message="Confirmer la validation?" icon="ui-icon-alert" />
+								</p:commandLink>
+								<p:graphicImage value="/resources/img/valideO.png"
+									style="width:30px;height:auto" rendered="#{e.valide}" />
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="Oui" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Non" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-cancel"
+										style="float:right !important" />
+								</p:confirmDialog>
+							</p:column>
+							<p:column headerText="Afficher" style="width:60px"
+								exportable="false">
+								<h:link outcome="affichStationAvecVal"
+									rendered="#{enseignMB.duComite}">
+									<p:graphicImage value="/resources/img/aff.png"
+										style="width:30px;height:auto" />
+									<f:param name="id" value="#{e.id}" />
+								</h:link>
+								<h:link outcome="affichStation"
+									rendered="#{!enseignMB.duComite}">
+									<p:graphicImage value="/resources/img/aff.png"
+										style="width:30px;height:auto" />
+									<f:param name="id" value="#{e.id}" />
+								</h:link>
+							</p:column>
+
+							<f:facet name="footer">
+        					 #{enseignMB.stations.size()} station(s) en total.
+   				 			</f:facet>
+						</p:dataTable>
+
+						<p:outputLabel
+							value="NB: La validation des stations est reservée aux membres du comité ECOS"
+							style="font-weight:100;font-size:1em" />
+
+						<script type="text/javascript">
+    $('input.ui-column-filter').attr('placeholder','Rechercher');
+</script>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

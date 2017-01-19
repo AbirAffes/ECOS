@@ -1,0 +1,418 @@
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/template/template1.xhtml">
+
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="adminhome" value="Accueil" /></li>
+					<li><p:link outcome="/pages/auth/ecos" value="L'ecos" /></li>
+					<li><p:link outcome="/pages/auth/contact" value="Contact" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="nav navbar-nav2">
+					<li><p:link outcome="gestionEnseignants" value="Enseignants"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);" rendered="#{adminMB.identite.auto_en}"/></li>
+					<li><p:link outcome="gestionEtudiants" value="Etudiants"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);" rendered="#{adminMB.identite.auto_et}"/></li>
+					<li><p:link outcome="gestionExamens"
+							value="Sessions d'examens"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);" rendered="#{adminMB.identite.auto_ex}"/></li>
+					<li><p:link outcome="gestionAdmin" value="Administrateurs"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);" rendered="#{adminMB.identite.auto_admin}"/></li>
+				</ul>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="row2">
+		<div class="row">
+			<div class="box" style="padding: 15px 5px !important">
+				<div class="col-lg-12">
+					<h:form id="form1">
+						<h:panelGrid layout="grid" id="addPanel" columns="9">
+							<p:column>
+								<p:outputLabel value="Ajouter : " styleClass="intro-text2"
+									style="margin-left:30px" />
+							</p:column>
+							<p:column>
+								<p:spacer width="20" height="20" />
+							</p:column>
+							<p:column>
+								<p:calendar id="date" value="#{adminMB.ex.date}" required="true"
+									requiredMessage="Date requise" />
+								<p:watermark for="date" value="Date" id="watermark3" />
+								<p:message for="date" />
+							</p:column>
+							<p:column>
+								<p:spacer width="20" height="20" />
+							</p:column>
+							<p:column>
+								<p:calendar id="time" value="#{adminMB.ex.horaire}"
+									pattern="HH:mm" timeOnly="true" required="true"
+									requiredMessage="Horaire requis" />
+								<p:watermark for="time" value="Horaire" id="watermark4" />
+								<p:message for="time" />
+							</p:column>
+							<p:column>
+								<p:spacer width="20" height="20" />
+							</p:column>
+							<p:column>
+								<p:calendar id="dated" value="#{adminMB.ex.debut_inscri}"
+									required="true" requiredMessage="Date requise" />
+								<p:watermark for="dated" value="Début d'inscription"
+									id="watermark5" />
+								<p:message for="dated" />
+							</p:column>
+							<p:column>
+								<p:spacer width="20" height="20" />
+							</p:column>
+							<p:column>
+								<p:calendar id="datef" value="#{adminMB.ex.fin_inscri}"
+									required="true" requiredMessage="Date requise" />
+								<p:watermark for="datef" value="Fin d'inscription"
+									id="watermark6" />
+								<p:message for="datef" />
+							</p:column>
+							<p:column>
+								<h:outputText value="" />
+							</p:column>
+							<p:column>
+								<h:outputText value="" />
+							</p:column>
+							<p:column>
+								<p:inputText id="nbP" value="#{adminMB.ex.nbMax}"
+									required="true" requiredMessage="Nombre requis"
+									converterMessage="Nombre erroné" style="margin-top:5px;">
+									<f:validateDoubleRange minimum="0" maximum="300" />
+								</p:inputText>
+								<p:watermark for="nbP" value="Nombre de places" id="watermark2" />
+								<p:message for="nbP" />
+							</p:column>
+							<p:column>
+								<p:spacer width="20" height="20" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="domaine" value="#{adminMB.ex.domaine}"
+									required="true"
+									style="width:203px;padding-right:0px;margin-top:8px;"
+									requiredMessage="Domaine requis">
+									<f:selectItem itemLabel="Domaine" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="Pratiques médicales" itemValue="M" />
+									<f:selectItem itemLabel="Pratiques chirurgicales" itemValue="C" />
+									<f:selectItem itemLabel="Pratiques en pédiatrie" itemValue="P" />
+									<f:selectItem itemLabel="Pratiques en gynéco-obstétrique"
+										itemValue="G" />
+								</p:selectOneMenu>
+								<p:message for="domaine" />
+							</p:column>
+							<p:column>
+								<p:spacer width="20" height="20" />
+							</p:column>
+							<p:column>
+								<p:selectCheckboxMenu id="jury" value="#{adminMB.idJury}"
+									label="liste des jury" filter="true" filterMatchMode="contains"
+									panelStyle="width:280px" style="width:203px;margin-top:12px;"
+									required="true" requiredMessage="Liste requise">
+									<f:selectItems value="#{adminMB.enseignantsList}" var="eg"
+										itemLabel="#{eg.nom} #{eg.prenom} ( cin : #{eg.cin} )"
+										itemValue="#{eg.id}" />
+								</p:selectCheckboxMenu>
+								<p:message for="jury" />
+							</p:column>
+							<p:column>
+								<h:outputText value="" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="president" value="#{adminMB.idPresident}"
+									filter="true" filterMatchMode="contains" required="true"
+									requiredMessage="Choix requis"
+									style="width:203px;padding-right:0px;margin-top:8px">
+									<f:selectItem itemLabel="Président du jury" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItems value="#{adminMB.enseignantsList}" var="eng"
+										itemLabel="#{eng.nom} #{eng.prenom} ( cin : #{eng.cin} )"
+										itemValue="#{eng.id}" />
+								</p:selectOneMenu>
+								<p:message for="president" />
+							</p:column>
+							<p:column>
+								<h:outputText value="" />
+							</p:column>
+							<p:column>
+								<h:outputText value="" />
+							</p:column>
+							<p:column>
+								<p:commandButton id="btn_reset" value="Réinitialiser"
+									style="margin-top:8px;width:203px" icon="ui-icon-trash">
+									<p:ajax update=":form1:addPanel" resetValues="true" />
+								</p:commandButton>
+							</p:column>
+							<p:column>
+								<h:outputText value="" />
+							</p:column>
+							<p:column>
+								<p:commandButton id="btn_add" value="Créer"
+									update=":form :form1" action="#{adminMB.ajouterExamen()}"
+									style="margin-top:8px;width:203px" icon="ui-icon-plus">
+									<p:collector value="#{adminMB.ex}" addTo="#{adminMB.examens}"
+										unique="true" />
+								</p:commandButton>
+							</p:column>
+						</h:panelGrid>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+
+	<ui:define name="row3">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<h:form id="form">
+						<p:growl id="message1" showDetail="true" />
+						<p:dataTable id="tbl" value="#{adminMB.examens}" var="e"
+							border="1" emptyMessage="Aucun examen dans la base"
+							editable="true" filteredValue="#{adminMB.examensFiltres}"
+							rowKey="#{e.id}" style="width:100%">
+							<f:facet name="header">
+          						 La liste des examens ECOS
+          			 				
+							</f:facet>
+
+							<p:column headerText="Domaine" filterBy="#{e.domaine}"
+								style="width:120px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.domaine}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu id="domaine" value="#{e.domaine}"
+											required="true" style="width:100%;padding-right:0px;"
+											requiredMessage="Domaine requis">
+											<f:selectItem itemLabel="Domaine" itemValue=""
+												noSelectionOption="true" />
+											<f:selectItem itemLabel="Pratiques médicales" itemValue="M" />
+											<f:selectItem itemLabel="Pratiques chirurgicales"
+												itemValue="C" />
+											<f:selectItem itemLabel="Pratiques en pédiatrie"
+												itemValue="P" />
+											<f:selectItem itemLabel="Pratiques en gynéco-obstétrique"
+												itemValue="G" />
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Date" filterBy="#{e.date}"
+								style="width:120px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.date}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{e.date}" required="true"
+											style="width:100%" requiredMessage="Date requise" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Horaire" filterBy="#{e.horaire}"
+								style="width:120px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.horaire}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{e.horaire}" pattern="HH:mm"
+											timeOnly="true" required="true" style="width:100%"
+											requiredMessage="Horaire requis" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Debut-inscri" filterBy="#{e.debut_inscri}"
+								style="width:120px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.debut_inscri}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{e.debut_inscri}" required="true"
+											style="width:100%"
+											requiredMessage="Date de début d'inscri requise" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Fin-inscri" filterBy="#{e.fin_inscri}"
+								style="width:120px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.fin_inscri}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{e.fin_inscri}" required="true"
+											style="width:100%"
+											requiredMessage="Date de fin d'inscri requise" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Capacité" style="width:90px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.nbMax}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{e.nbMax}" required="true"
+											requiredMessage="Nombre requis"
+											converterMessage="Nombre erroné">
+											<f:validateDoubleRange minimum="0" maximum="300" />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Président du Jury" style="width:100px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText
+											value="#{e.president.nom} #{e.president.prenom} ( cin : #{e.president.cin} )" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu id="president" value="#{adminMB.idPresident}"
+											filter="true" filterMatchMode="contains" required="true"
+											requiredMessage="Choix requis"
+											style="width:203px;padding-right:0px;margin-top:8px">
+											<f:selectItem itemLabel="Président du jury" itemValue=""
+												noSelectionOption="true" />
+											<f:selectItems value="#{adminMB.enseignantsList}" var="eng"
+												itemLabel="#{eng.nom} #{eng.prenom} ( cin : #{eng.cin} )"
+												itemValue="#{eng.id}" />
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column id="jur" headerText="Jury" style="width:70px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<p:commandButton icon="ui-icon-person" process="@this"
+											update="dialog2" oncomplete="PF('dlg2').show();"
+											actionListener="#{adminMB.listJuryE(e)}" />
+										<p:dialog id="dialog2" header="Les membres du jury"
+											widgetVar="dlg2" minHeight="40">
+											<p:dataList value="#{adminMB.jurys}" var="ju"
+												styleClass="datalist-noborder"
+												emptyMessage="Aucun participant">
+       									 #{ju.nom} #{ju.prenom} (CIN:#{ju.cin})
+   										 </p:dataList>
+										</p:dialog>
+									</f:facet>
+									<f:facet name="input">
+										<p:selectCheckboxMenu id="menu1" value="#{adminMB.idJury}"
+											label="Jury" filter="true" filterMatchMode="startsWith"
+											panelStyle="width:285px" style="height:30px;width:80px">
+											<f:selectItems value="#{adminMB.enseignantsList}" var="eg"
+												itemLabel="#{eg.nom} #{eg.prenom} (cin:#{eg.cin})"
+												itemValue="#{eg.id}" />
+										</p:selectCheckboxMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Participants" style="width:100px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<p:commandButton icon="ui-icon-person" process="@this"
+											update="dialog1" oncomplete="PF('dlg1').show();"
+											actionListener="#{adminMB.listCandidats(e)}" />
+										<p:dialog id="dialog1" header="Les participants"
+											widgetVar="dlg1" minHeight="40">
+											<p:dataList value="#{adminMB.candidats}" var="c"
+												styleClass="datalist-noborder"
+												emptyMessage="Aucun participant">
+       									 #{c.nom} #{c.prenom} (CIN:#{c.cin})
+   										 </p:dataList>
+										</p:dialog>
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+
+							<p:ajax event="rowEdit" listener="#{adminMB.modifierExamen}"
+								update=":form:tbl :form:message1" />
+							<p:ajax event="rowEditCancel" />
+
+							<p:column style="width:35px" exportable="false">
+								<p:rowEditor />
+							</p:column>
+
+							<p:column style="width:50px" exportable="false">
+								<p:commandLink update=":form" title="Supp"
+									actionListener="#{adminMB.supprimerExamen(e.id)}">
+									<p:graphicImage value="/resources/img/trash.png"
+										style="width:30px;height:auto" />
+									<p:confirm header="Suppression"
+										message="Confirmer la suppression?" icon="ui-icon-alert" />
+								</p:commandLink>
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="Oui" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Non" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-cancel"
+										style="float:right !important" />
+								</p:confirmDialog>
+							</p:column>
+
+							<f:facet name="footer">
+        					 #{adminMB.examens.size()} examen(s) en total.
+   				 			</f:facet>
+						</p:dataTable>
+
+						<script type="text/javascript">
+    $('input.ui-column-filter').attr('placeholder','Rechercher');
+</script>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
