@@ -1,0 +1,159 @@
+<html>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/template1.xhtml">
+	
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="accueil" value="Accueil" /></li>
+					<li><p:link outcome="ecos" value="L'ecos" /></li>
+					<li><p:link outcome="contact" value="Contact" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="box-left-dec">
+				<div class="slider2" style="margin: 0 auto">
+					<p:imageSwitch effect="fade" id="fadeEffect2"
+						styleClass="imagestyle1">
+						<p:graphicImage value="/resources/accueil/slide-0.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-1.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-2.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-3.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-4.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-5.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-6.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-7.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-8.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-9.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-10.png"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-11.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-12.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-13.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-14.jpg"
+							styleClass="imagestyle1" />
+						<p:graphicImage value="/resources/accueil/slide-15.jpg"
+							styleClass="imagestyle1" />
+					</p:imageSwitch>
+				</div>
+			</div>
+
+			<div class="box-right-dec">
+				<div class="col-lg-12 text-center">
+					<h2 class="textstyle">
+						<small><strong>Identification</strong></small>
+					</h2>
+					<p:spacer width="20" height="20" />
+					<h:form id="login_form">
+						<p:growl id="growlmsg2" showDetail="true" autoUpdate="true" />
+						<h:panelGrid columns="2" styleClass="panelGridCenter"
+							cellspacing="5">
+							<p:inputText id="cin" value="#{auth.cin}" required="true"
+								requiredMessage="CIN requis!" converterMessage="CIN invalide!" />
+							<p:watermark for="cin" value="CIN" id="watermark" />
+							<p:spacer />
+							<p:spacer />
+							<p:password id="pwd" value="#{auth.password}" required="true"
+								requiredMessage="Password requis!" />
+							<p:watermark for="pwd" value="Password" id="watermark1" />
+							<p:commandButton id="login_submit" action="#{auth.doLogin()}"
+								value="S'identifier" ajax="false" styleClass="buttonstyle"
+								icon="ui-icon-unlocked" />
+							<p:messages for="login_submit" autoUpdate="true" />
+							<hr class="tagline-divider" />
+							<h:outputLabel value="" />
+							<h:link outcome="inscri" value="Mot de passe oublié ?" />
+							<h:outputLabel value="" />
+							<h:link outcome="inscri" value="Inscription" />
+							<h:outputLabel value="" />
+						</h:panelGrid>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+
+	<ui:define name="row2">
+
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12 text-center">
+					<h2 class="brand-before">
+						<small>Bienvenue sur</small>
+					</h2>
+					<h1 class="brand-name">MedEvalTools</h1>
+					<hr class="tagline-divider" />
+					<small> <strong><p:link
+								value="www.medevaltools.org" outcome="accueil" /> </strong>
+					</small>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+
+	<ui:define name="row3">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<hr />
+					<h2 class="intro-text text-center">
+						Les évaluations <strong>Cliniques</strong>
+					</h2>
+					<hr />
+					<h:graphicImage value="/resources/accueil/int.png"
+						styleClass="img-responsive img-border img-left1"
+						style="width:220px;height:auto;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" />
+					<hr class="visible-xs" />
+					<p class="style-par">L'apprentissage de la compétence clinique
+						fait partie intégrante de la formation des étudiants médecins. Il
+						s'effectue au cours des stages auprès des professionnels de
+						terrain et au sein des écoles de médecine lors des cours
+						magistraux mais aussi lors de travaux et enseignements dirigés, de
+						travaux pratiques et d'évaluations formatives.</p>
+					<p>Les compétences cliniques des étudiants sont évaluées tout
+						au long de leurs cursus par les validations de stages et par les
+						évaluations cliniques normatives comme l'évaluation par ECOS qui a
+						été décrite pour la première fois par Harden en 1975.</p>
+					<p>L'évaluation par ECOS a fait l'objet de nombreuses études.
+						Elle est devenue une pratique de référence et a été largement
+						adoptée par les établissements d'enseignement et les organisations
+						d'évaluation à enjeux importants. Elle est considérée comme fiable
+						et robuste et comme l'évaluation idéale de la compétence.</p>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

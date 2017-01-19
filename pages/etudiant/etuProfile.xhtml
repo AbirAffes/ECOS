@@ -1,0 +1,111 @@
+<html>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/template1.xhtml">
+
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="etudhome" value="Accueil" /></li>
+					<li><p:link outcome="/pages/auth/ecos" value="L'ecos" /></li>
+					<li><p:link outcome="/pages/auth/contact" value="Contact" /></li>
+					<li><p:link outcome="etuProfile" value="Profile" /></li>
+					<li><p:link outcome="inscrip" value="Inscription" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12"></div>
+				<h2 class="intro-text1 text-center">
+					<p:graphicImage value="/resources/img/pen.png"
+						style="width:130px;height:auto;padding-right:50px" />
+					Profile
+				</h2>
+				<hr />
+				<p:spacer height="30" />
+				<h:form id="form">
+					<p:growl id="message1" showDetail="true" />
+					<h:panelGrid columns="2" columnClasses="col1,col2"
+						style="	margin:0px auto" cellpadding="50" border="1" width="80%">
+						<h:outputText value="Cin: " />
+						<h:outputText value="#{etudMB.ident.cin}" />
+						<h:outputText value="Mot de passe: " />
+						<p:column>
+							<h:outputText value="#{etudMB.ident.pwd}" />
+							<p:spacer width="20" />
+							<p:commandLink value="( Modifier )" onclick="PF('dlg').show();"
+								type="button" title="modif" />
+						</p:column>
+						<h:outputText value="Nom: " />
+						<h:outputText value="#{etudMB.ident.nom}" />
+						<h:outputText value="Prénom: " />
+						<h:outputText value="#{etudMB.ident.prenom}" />
+						<h:outputText value="Email: " />
+						<h:outputText value="#{etudMB.ident.mail}" />
+						<h:outputText value="QRcode:" />
+						<p:barcode value="#{etudMB.ident.cin.toString()}" type="qr"
+							style="border:solid;border-width: 1px;" />
+						<h:outputText value="Crédits: " />
+						<h:outputText value="#{etudMB.ident.credits}" />
+						<h:outputText value="Autorisé à passer les examens: " />
+						<h:outputText value="#{etudMB.ident.absence}" />
+						<h:outputText value="Stage en Chirurgie validé: " />
+						<h:outputText value="#{etudMB.ident.stage_ch}" />
+						<h:outputText value="Stage en Pédiatrie validé: " />
+						<h:outputText value="#{etudMB.ident.stage_ped}" />
+						<h:outputText value="Stage en Gynéco-obstétrique validé: " />
+						<h:outputText value="#{etudMB.ident.stage_gy}" />
+						<h:outputText value="Stage en pratiques médicales validé: " />
+						<h:outputText value="#{etudMB.ident.stage_med}" />
+						<h:outputText value="Examen clinique sur la Chirurgie validé: " />
+						<h:outputText value="#{etudMB.ident.valid_ch}" />
+						<h:outputText value="Examen clinique sur la Pédiatrie validé: " />
+						<h:outputText value="#{etudMB.ident.valid_ped}" />
+						<h:outputText
+							value="Examen clinique sur la Gynéco-obstétrique validé: " />
+						<h:outputText value="#{etudMB.ident.valid_gy}" />
+						<h:outputText
+							value="Examen clinique sur les pratiques médicales validé: " />
+						<h:outputText value="#{etudMB.ident.valid_med}" />
+					</h:panelGrid>
+
+					<p:dialog header="Modifier password" widgetVar="dlg"
+						resizable="false">
+						<h:panelGrid columns="2" cellpadding="5">
+							<h:outputLabel for="username"
+								value="Votre nouveau mot de passe doit comporter 8 caractères minimum:" />
+							<p:spacer />
+							<p:inputText id="username" value="#{etudMB.nPwd}" required="true"
+								label="username" style="margin-bottom: 10px;width: 100%" />
+							<p:message for="username" />
+							<f:facet name="footer">
+								<p:commandButton value="Modifier" update=":form" process=":form"
+									actionListener="#{etudMB.modifUser()}"
+									oncomplete="PF('dlg').hide()" style="float:right;"
+									icon="ui-icon-check" />
+							</f:facet>
+						</h:panelGrid>
+					</p:dialog>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

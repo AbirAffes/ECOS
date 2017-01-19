@@ -1,0 +1,267 @@
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/template.xhtml">
+
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="#{identity.home}" value="Accueil" /></li>
+					<li><p:link outcome="ecos" value="L'ecos" /></li>
+					<li><p:link outcome="contact" value="Contact" /></li>
+					<li><p:link outcome="#{identity.profil}" value="Profile"
+							rendered="#{not empty identity.profil}" /></li>
+					<li><p:link outcome="#{identity.inscri}" value="Inscription"
+							rendered="#{not empty identity.inscri}" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<hr />
+					<h2 class="intro-text1 text-center">
+						Qu'est ce qu'un <strong>ECOS</strong>?
+					</h2>
+					<hr class="style-sep" />
+					<h:graphicImage value="/resources/images/1.jpg"
+						styleClass="img-responsive img-border img-left2"
+						style=";box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" />
+					<hr class="visible-xs" />
+					<p>
+						Un <strong>Examen Clinique Objectif Structuré</strong> dit «<strong>
+							ECOS</strong> » est un examen pratique final qui permet d’évaluer,
+						instantanément, de façon normalisée et moins « théorique » la
+						compétence d’un interne en action. Il est de plus en plus utilisé
+						dans les sciences de la santé (la médecine, la chiropratique, la
+						physiothérapie, la radiographie, les soins infirmiers, la
+						pharmacie, l’odontologie etc).
+					</p>
+					<p>L’évaluation porte sur la connaissance (le savoir), sur
+						l’habileté technique (savoir-faire), et sur le comportement
+						(savoir être). Il s’agit donc d’évaluer les performances telles la
+						communication, l’examen physique, les procédures médicales, la
+						prescription, les techniques de manipulation et l’interprétation
+						des résultats.</p>
+					<p>Cet examen est conçu pour être :</p>
+					<p>
+						<h:graphicImage value="/resources/images/icon-1.png"
+							styleClass="img-responsive img-icon" />
+						<strong>Objectif : </strong> tous les candidats sont évalués à
+						l'aide des mêmes données, la même grille et le même schéma de
+						notation ce qui rend l’évaluation plus objective.
+					</p>
+					<p>
+						<h:graphicImage value="/resources/images/icon-1.png"
+							styleClass="img-responsive img-icon" />
+						<strong> Structuré :</strong> L’examen est soigneusement structuré
+						de manière à inclure des parties de tous les éléments du programme
+						d'études, chacune de ces parties a un objectif très spécifique et
+						des scripts détaillés sont rédigées avec soin et fournis aux
+						participants de l’examen pour que le candidat sache qu’il a une
+						tâche bien précise à remplir.
+					</p>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+
+	<ui:define name="row2">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<hr />
+					<h2 class="intro-text1 text-center">
+						Qu'est ce qu'une <strong>station ECOS</strong>?
+					</h2>
+					<hr class="style-sep" />
+					<p>L’élément de base des examens cliniques est la «station
+						ECOS». C’est la présentation d’une situation clinique réelle dont
+						le point de départ est une plainte physique ou fonctionnelle.</p>
+					<br />
+					<p>Une station ECOS peut être :</p>
+					<p>
+						<h:graphicImage value="/resources/images/icon-1.png"
+							styleClass="img-responsive img-icon" />
+						Une station <strong>pleine</strong> où l’interne, tenant compte
+						d’une notice d’informations qui lui est remise au début de
+						l’examen, joue le rôle du médecin et un acteur, à partir d’un rôle
+						écrit reproductible, joue le rôle d’un patient.
+					</p>
+					<p>
+						<h:graphicImage value="/resources/images/icon-1.png"
+							styleClass="img-responsive img-icon" />
+						Une station technique, dite<strong> sèche</strong>, où le patient
+						simulé est remplacé par un mannequin ou un ensemble de données à
+						analyser comme des images (photo, radiographie etc.), du texte
+						(analyse de sang etc.), une vidéo ou autre.
+					</p>
+					<br />
+					<p>Chaque station comporte les éléments suivants, nécessaires
+						pour la mise en place pratique de l’évaluation :</p>
+
+					<p:accordionPanel activeIndex="-1">
+						<p:tab title="Une étiquette" titleStyleClass="headr-styl">
+							Une étiquette présente la situation et le contexte
+								cliniques avec les données nécessaires.
+						</p:tab>
+						<p:tab title="Des instructions" titleStyleClass="headr-styl">
+							Ces instructions sont à suivre scrupuleusement par les
+								participants :<br />
+							<h:graphicImage value="/resources/images/icon-1.png"
+								styleClass="img-responsive img-icon1" />
+								Des instructions pour le candidat : ce qu’il doit faire avec les données de
+								l’étiquette clinique.<br />
+							<h:graphicImage value="/resources/images/icon-1.png"
+								styleClass="img-responsive img-icon1" />
+								Des instructions pour le patient simulé (s’il en fait partie) : la
+								description de l’état physique, fonctionnel et mental du patient
+								qu’il représente ainsi que les réponses à donner au candidat et
+								les émotions à utiliser lors de la consultation.<br />
+							<h:graphicImage value="/resources/images/icon-1.png"
+								styleClass="img-responsive img-icon1" />
+								Des instructions pour le médecin observateur : les résultats d’examens
+								complémentaires à donner aux candidats quand c’est signalé.
+						</p:tab>
+						<p:tab title="Deux grilles" titleStyleClass="headr-styl">
+							Les grilles présentsnt les compétences à valider sous
+								forme d’items:<br />
+							<h:graphicImage value="/resources/images/icon-1.png"
+								styleClass="img-responsive img-icon1" />Une première grille avec pondération des items pour le
+								calcul du score, indiquant ce que doit observer le MO des
+								prestations du candidat.<br />
+							<h:graphicImage value="/resources/images/icon-1.png"
+								styleClass="img-responsive img-icon1" />Une deuxième grille sans pondération des items sur
+								laquelle seront notées et validées les compétences du candidat
+								par le médecin observateur.
+						</p:tab>
+					</p:accordionPanel>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="row3">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<hr />
+					<h2 class="intro-text1 text-center">
+						évaluation par <strong>ECOS</strong>
+					</h2>
+					<hr class="style-sep" />
+					<p>Les évaluations par ECOS sont des épreuves basées sur la
+						succession de 4 stations, deux pleines alternées avec deux sèches
+						comportant chacune une situation clinique réelle à analyser en un
+						temps limité (7 minutes par station). Le circuit peut être
+						multiplié autant de fois que nécessite le nombre de candidats à
+						évaluer.</p>
+					<p>Chaque session d’ECOS comporte quatre examens dans les
+						quatre domaines suivants :</p>
+					<p:panelGrid columns="4" layout="grid">
+						<p:column>
+							<h:graphicImage value="/resources/images/m.jpg"
+								styleClass="img-responsive img-list" />
+							<h:outputText value="Pratiques médicales" />
+						</p:column>
+						<p:column>
+							<h:graphicImage value="/resources/images/c.jpg"
+								styleClass="img-responsive img-list" />
+							<h:outputText value="Pratiques chirurgicales" />
+						</p:column>
+						<p:column>
+							<h:graphicImage value="/resources/images/p.jpg"
+								styleClass="img-responsive img-list" />
+							<h:outputText value="Pratiques en pédiatrie" />
+						</p:column>
+						<p:column>
+							<h:graphicImage value="/resources/images/g.jpg"
+								styleClass="img-responsive img-list" />
+							<h:outputText value="Pratiques en gynéco-obstétrique" />
+						</p:column>
+					</p:panelGrid>
+					<br />
+					<p:accordionPanel activeIndex="-1">
+						<p:tab title="Sur quoi je suis évalué ?"
+							titleStyleClass="headr-styl">
+							<h:graphicImage value="/resources/images/icon-2.png"
+								styleClass="img-responsive img-icon2" />
+								Le candidat est évalué sur sa prestation dans la situation et le contexte cliniques de chaque station. <br />
+							<h:graphicImage value="/resources/images/icon-2.png"
+								styleClass="img-responsive img-icon2" />
+								La prestation est mesurée selon un certain nombre de compétences de la liste suivante : <br />
+Interrogatoire;  Diagnostic;  Examen physique;  Traitement et prise en charge thérapeutique;  Gestes pratiques;  Investigation et demande d’examens complémentaires;  Analyse de données cliniques et paracliniques;  Communication, respect des droits et éthique médicale;  Organisation des démarches diagnostique et de prise en charge dans la prestation. <br />
+							<h:graphicImage value="/resources/images/icon-2.png"
+								styleClass="img-responsive img-icon2" />
+								Chaque station contient une ou plusieurs compétences annoncée(s) implicitement dans l’étiquette et les instructions aux candidats.
+						</p:tab>
+						<p:tab title="Comment je suis évalué ?"
+							titleStyleClass="headr-styl">
+							<h:graphicImage value="/resources/images/icon-2.png"
+								styleClass="img-responsive img-icon2" />Cette évaluation se fait selon la grille prédéfinie et selon le mode binaire « fait », « non fait ». Chaque item est considéré comme « fait » s’il répond aux conditions précisées dans la station. <br />
+							<h:graphicImage value="/resources/images/icon-2.png"
+								styleClass="img-responsive img-icon2" />La notification des items (« fait = 1 » « non fait = 0 ») sera multipliée par la pondération prédéfinie dans la station et le total donne le score global de la station. Les compétences sont mesurées par la sommation des items qui les constituent.
+						</p:tab>
+					</p:accordionPanel>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<hr />
+					<h2 class="intro-text1 text-center">
+						Inscription à un examen <strong>ECOS</strong>
+					</h2>
+					<hr class="style-sep" />
+					<p>L’inscription est ouverte, pendant une période fixée, à tout
+						étudiant, interne et résident répondant aux conditions suivantes :</p>
+					<p>
+						<h:graphicImage value="/resources/images/icon-3.png"
+							styleClass="img-responsive img-icon" />
+						Son stage clinique dans le domaine de l’évaluation choisie est
+						validé. <br />
+						<h:graphicImage value="/resources/images/icon-3.png"
+							styleClass="img-responsive img-icon" />
+						L’étudiant n’a pas de crédits. <br />
+						<h:graphicImage value="/resources/images/icon-3.png"
+							styleClass="img-responsive img-icon" />
+						L’étudiant n’a pas été déclaré absent auparavant pendant un examen
+						clinique dans lequel il s’est inscrit.
+					</p>
+					<p>Chaque examen a un nombre limité de candidats (premiers
+						inscrits premiers acceptés) ce qui fait que l’inscription est
+						tributaire du nombre de places ouvertes et ne peut se faire que
+						dans une seule session à la fois.</p>
+					<p>
+						<h:graphicImage value="/resources/images/icon-4.png"
+							styleClass="img-responsive img-icon" />
+						Si votre inscription a été retenue et que vous vous n’êtes pas
+						présenté à l’examen, vous serez déclaré comme non admis et vous
+						serez automatiquement exclu de la session suivante d’ECOS.
+					</p>
+
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

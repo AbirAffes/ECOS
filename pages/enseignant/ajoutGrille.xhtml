@@ -1,0 +1,180 @@
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/template/template1.xhtml">
+
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="enshome" value="Accueil" /></li>
+					<li><p:link outcome="/pages/auth/ecos" value="L'ecos" /></li>
+					<li><p:link outcome="/pages/auth/contact" value="Contact" /></li>
+					<li><p:link outcome="ensProfile" value="Profile" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="nav navbar-nav2">
+					<li><p:link outcome="ajoutStation" value="Déposer une station"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="gererStation" value="Vos stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="choixExamens" value="Les examens"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duJury}" /></li>
+					<li><p:link outcome="lisStations" value="Les stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duJury or enseignMB.duComite}" /></li>
+					<li><p:link outcome="epreuves" value="Les résultats"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duComite}" /></li>
+				</ul>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="row2">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<hr />
+					<h2 class="intro-text text-center">Déposer une nouvelle
+						station</h2>
+					<hr />
+					<f:metadata>
+						<f:viewParam name="identifStation"
+							value="#{enseignMB.idStationToAddObjectifs}" />
+						<f:viewParam name="nombreObjectifs"
+							value="#{enseignMB.nbObjToAddObjectifs}" />
+						<f:viewAction action="#{enseignMB.allerGrille()}" />
+					</f:metadata>
+					<h:form id="form1">
+						<p:growl id="message1" showDetail="true" />
+
+						<p:tabView activeIndex="#{enseignMB.activeIndex}" id="tabGrille">
+							<p:tab id="ListeObjectifs" title="Objectifs">
+
+
+								<p:panelGrid cellspacing="20" styleClass="noBorders">
+
+									<f:facet name="header">
+
+										<p:row>
+											<p:column>Objectifs</p:column>
+											<p:column>Pondérations</p:column>
+											<p:column>Nombres d'items</p:column>
+										</p:row>
+
+									</f:facet>
+
+									<ui:repeat value="#{enseignMB.objectifs}" var="o">
+
+										<p:row>
+											<p:column>
+												<p:inputTextarea id="ob" rows="2" cols="80"
+													value="#{o.objectif}" required="true"
+													requiredMessage="Objectif requis" />
+												<p:watermark for="ob" value="Objectif" id="watermark9" />
+												<p:message for="ob" />
+
+											</p:column>
+											<p:column>
+												<p:inputText id="pond" value="#{o.ponderation}"
+													style="width: 110px;"
+													onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+													required="true" requiredMessage="Pondération requise">
+												</p:inputText>
+												<p:watermark for="pond" value="Pondération" id="watermark10" />
+												<p:message for="pond" />
+											</p:column>
+											<p:column>
+												<p:inputText id="nbItems" value="#{o.nbItems}"
+													style="width: 110px;"
+													onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+													required="true" requiredMessage="Nombre d'items requis">
+												</p:inputText>
+												<p:watermark for="nbItems" value="Nombre items"
+													id="watermark11" />
+												<p:message for="nbItems" />
+											</p:column>
+										</p:row>
+									</ui:repeat>
+								</p:panelGrid>
+								<p:commandButton value="Suivant" style="float:right"
+									icon="ui-icon-arrowthick-1-e"
+									action="#{enseignMB.allerItems(1)}" update=":form1" />
+							</p:tab>
+							<p:tab id="listeItems" title="Items"
+								rendered="#{enseignMB.verifObj}" disabled="true">
+								<p:panelGrid cellspacing="20">
+									<ui:repeat value="#{enseignMB.itemsOfObjectifs}" var="ob">
+										<p:row>
+											<p:outputLabel style="margin-top:15px;padding: 15px;">
+												#{ob.get(0).objectif.objectif} (#{ob.get(0).objectif.ponderation}/100)
+											</p:outputLabel>
+										</p:row>
+										<p:row>
+											<p:panelGrid cellspacing="20">
+												<f:facet name="header">
+													<p:row>
+														<p:column>Items</p:column>
+														<p:column>Pondérations</p:column>
+													</p:row>
+												</f:facet>
+												<ui:repeat value="#{ob}" var="i">
+													<p:row>
+														<p:column>
+															<p:inputTextarea id="descrip" rows="2" cols="80"
+																value="#{i.description}" required="true"
+																requiredMessage="Item requis" />
+															<p:watermark for="descrip" value="Item" id="watermark12" />
+															<p:message for="descrip" />
+														</p:column>
+														<p:column>
+															<p:inputText id="ponder" value="#{i.ponderation}"
+																style="width: 110px;"
+																onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+																required="true" requiredMessage="Pondération requise">
+															</p:inputText>
+															<p:watermark for="ponder" value="Pondération"
+																id="watermark13" />
+															<p:message for="ponder" />
+														</p:column>
+													</p:row>
+												</ui:repeat>
+											</p:panelGrid>
+										</p:row>
+									</ui:repeat>
+								</p:panelGrid>
+								<p:commandButton value="Précédent"
+									style="float:left;margin-top:5px" icon="ui-icon-arrowthick-1-w"
+									action="#{enseignMB.suivant(0)}" update=":form1" />
+								<p:commandButton value="Soumettre la station"
+									action="#{enseignMB.saveStationFinal()}" style="float:right"
+									icon="ui-icon-check" update=":form1:message1 :form1" />
+							</p:tab>
+						</p:tabView>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

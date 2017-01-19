@@ -1,0 +1,113 @@
+<html>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/template1.xhtml">
+	
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="etudhome" value="Accueil" /></li>
+					<li><p:link outcome="/pages/auth/ecos" value="L'ecos" /></li>
+					<li><p:link outcome="/pages/auth/contact" value="Contact" /></li>
+					<li><p:link outcome="etuProfile" value="Profile" /></li>
+					<li><p:link outcome="inscrip" value="Inscription" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+
+	<ui:define name="row1">
+		<div class="row" style="margin-bottom: 20px">
+			<div class="box-left-e">
+				<div class="slider1e">
+					<p:graphicImage value="/resources/img/med1.png"
+						style="width: 335px;height: inherit;position: absolute;left: 0;bottom: 0;z-index: 9;" />
+					<p:imageSwitch effect="fade" id="fadeEffect"
+						styleClass="imagestyle" style="z-index:1;margin:0px auto">
+						<p:graphicImage value="/resources/accueil/slide-0.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-1.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-2.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-3.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-4.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-5.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-6.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-7.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-8.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-9.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-10.png"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-11.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-12.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-13.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-14.jpg"
+							styleClass="imagestyle" />
+						<p:graphicImage value="/resources/accueil/slide-15.jpg"
+							styleClass="imagestyle" />
+					</p:imageSwitch>
+					<p:graphicImage value="/resources/img/med2.png"
+						style="width: 252px;height: inherit;position: absolute;right: 0;bottom: 0;z-index: 9;margin-right:30px" />
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="row2">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<hr />
+					<h2 class="intro-text text-center">
+						Les évaluations <strong>Cliniques</strong>
+					</h2>
+					<hr />
+					<h:graphicImage value="/resources/accueil/int.png"
+						styleClass="img-responsive img-border img-left1"
+						style="width:220px;height:auto;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" />
+					<hr class="visible-xs" />
+					<p class="style-par">L'apprentissage de la compétence clinique
+						fait partie intégrante de la formation des étudiants médecins. Il
+						s'effectue au cours des stages auprès des professionnels de
+						terrain et au sein des écoles de médecine lors des cours
+						magistraux mais aussi lors de travaux et enseignements dirigés, de
+						travaux pratiques et d'évaluations formatives.</p>
+					<p>Les compétences cliniques des étudiants sont évaluées tout
+						au long de leurs cursus par les validations de stages et par les
+						évaluations cliniques normatives comme l'évaluation par ECOS qui a
+						été décrite pour la première fois par Harden en 1975.</p>
+					<p>L'évaluation par ECOS a fait l'objet de nombreuses études.
+						Elle est devenue une pratique de référence et a été largement
+						adoptée par les établissements d'enseignement et les organisations
+						d'évaluation à enjeux importants. Elle est considérée comme fiable
+						et robuste et comme l'évaluation idéale de la compétence.</p>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

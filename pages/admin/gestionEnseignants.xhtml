@@ -1,0 +1,407 @@
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/template/template1.xhtml">
+
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="adminhome" value="Accueil" /></li>
+					<li><p:link outcome="/pages/auth/ecos" value="L'ecos" /></li>
+					<li><p:link outcome="/pages/auth/contact" value="Contact" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="nav navbar-nav2">
+					<li><p:link outcome="gestionEnseignants" value="Enseignants"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);"
+							rendered="#{adminMB.identite.auto_en}" /></li>
+					<li><p:link outcome="gestionEtudiants" value="Etudiants"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);"
+							rendered="#{adminMB.identite.auto_et}" /></li>
+					<li><p:link outcome="gestionExamens"
+							value="Sessions d'examens"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);"
+							rendered="#{adminMB.identite.auto_ex}" /></li>
+					<li><p:link outcome="gestionAdmin" value="Administrateurs"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.29);"
+							rendered="#{adminMB.identite.auto_admin}" /></li>
+				</ul>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="row2">
+		<div class="row">
+			<div class="box" style="padding: 15px 5px !important">
+				<div class="col-lg-12">
+					<p:dialog modal="true" widgetVar="statusDialog" draggable="false"
+						closable="false" resizable="false" showHeader="false">
+						<p:graphicImage value="/resources/images/ajax-loader.gif" />
+					</p:dialog>
+					<h:form id="form1">
+						<h:panelGrid columns="11" id="enspanel">
+
+							<p:column>
+								<p:outputLabel value="Ajouter : " styleClass="intro-text2"
+									style="margin-left:30px" />
+							</p:column>
+							<p:column>
+								<p:spacer width="20" height="20" />
+							</p:column>
+							<p:column>
+								<p:inputText id="cin" value="#{adminMB.ens.cin}" required="true"
+									style="width:160px" requiredMessage="Cin requis"
+									converterMessage="Cin invalide" />
+								<p:watermark for="cin" value="CIN" id="watermark" />
+								<p:message for="cin" />
+							</p:column>
+							<p:column>
+								<p:spacer width="10" height="10" />
+							</p:column>
+							<p:column>
+								<p:inputText id="nom" value="#{adminMB.ens.nom}" required="true"
+									style="width:165px" requiredMessage="Nom requis" />
+								<p:watermark for="nom" value="Nom" id="watermark2" />
+								<p:message for="nom" />
+							</p:column>
+							<p:column>
+								<p:spacer width="10" height="10" />
+							</p:column>
+							<p:column>
+								<p:inputText id="prenom" value="#{adminMB.ens.prenom}"
+									required="true" style="width:175px"
+									requiredMessage="Prénom requis" />
+								<p:watermark for="prenom" value="Prénom" id="watermark3" />
+								<p:message for="prenom" />
+							</p:column>
+							<p:column>
+								<p:spacer width="10" height="10" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="email" value="#{adminMB.ens.mail}"
+									required="true" style="width:270px"
+									validatorMessage="Email invalide"
+									requiredMessage="Adresse email requise">
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								</p:inputText>
+								<p:watermark for="email" value="Email" id="watermark4" />
+								<p:message for="email" />
+							</p:column>
+							<p:column>
+								<p:spacer width="10" height="10" />
+							</p:column>
+							<p:column>
+								<p:inputText id="gr" value="#{adminMB.ens.grade}"
+									required="true" style="width:160px"
+									requiredMessage="Grade requise" />
+								<p:watermark for="gr" value="Grade" id="watermark5" />
+								<p:message for="gr" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="" />
+							</p:column>
+							<p:column>
+								<h:outputText value="" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="aff" value="#{adminMB.ens.affiliation}"
+									required="true" style="width:160px;;margin-top:6px"
+									requiredMessage="Affiliation requise" />
+								<p:watermark for="aff" value="Affiliation" id="watermark6" />
+								<p:message for="aff" />
+							</p:column>
+							<p:column>
+								<h:outputText value="" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="comite"
+									value="#{adminMB.ens.membre_comite}"
+									style="width:165px;padding-right:0px;margin-top:10px"
+									required="true" requiredMessage="Choix requis">
+									<f:selectItem itemLabel="Membre du comité?" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="Oui" itemValue="#{true}" />
+									<f:selectItem itemLabel="Non" itemValue="#{false}" />
+								</p:selectOneMenu>
+								<p:message for="comite" />
+							</p:column>
+							<p:column>
+								<h:outputText value="" />
+							</p:column>
+
+							<p:column>
+								<p:selectOneMenu id="Pcomite"
+									value="#{adminMB.ens.president_comite}"
+									style="width:175px;padding-right:0px;margin-top:10px"
+									required="true" requiredMessage="Choix requis">
+									<f:selectItem itemLabel="Président du comité?"
+										itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItem itemLabel="Oui" itemValue="#{true}" />
+									<f:selectItem itemLabel="Non" itemValue="#{false}" />
+								</p:selectOneMenu>
+								<p:message for="Pcomite" />
+							</p:column>
+							<p:column>
+								<h:outputText value="" />
+							</p:column>
+							<p:column>
+								<p:commandButton id="btn_reset" value="Réinitialiser"
+									type="reset" icon="ui-icon-trash" style="margin-top:6px;" />
+								<p:spacer width="10" height="0" />
+								<p:commandButton id="btn_add" value="Ajouter"
+									update=":form :form1" action="#{adminMB.ajouterEnseignant()}"
+									icon="ui-icon-plus" style="margin-top:6px;width:123px">
+								</p:commandButton>
+							</p:column>
+
+						</h:panelGrid>
+						<p:separator />
+						<h:panelGrid columns="3">
+
+							<p:column>
+								<p:outputLabel
+									value="Pour ajouter toute une liste d'enseignants, veuillez joindre le fichier excel (.xls .xlsm .xlsx) :"
+									styleClass="intro-text2" style="margin-left:30px" />
+								<br />
+								<strong><h:outputText value=" NB :"
+										style="margin-left:60px" /></strong>
+								<h:outputText
+									value=" Les colonnes doivent être dans l'ordre suivant : cin | nom | prenom | mail | affiliation | grade" />
+
+							</p:column>
+							<p:column>
+								<p:spacer width="10" height="10" />
+							</p:column>
+							<p:column>
+								<h:form enctype="multipart/form-data">
+									<p:fileUpload
+										fileUploadListener="#{adminMB.insertEnseignantsViaExcel}"
+										mode="advanced" update=":form :form1 messagesUp" auto="true"
+										allowTypes="/(\.|\/)(xls|xlsm|xlsx)$/"
+										label="Sélectionner le fichier"
+										invalidFileMessage="Fichier invalide"
+										onstart="PF('statusDialog').show();"
+										oncomplete="PF('statusDialog').hide();" />
+									<p:growl id="messagesUp" showDetail="true" />
+								</h:form>
+							</p:column>
+						</h:panelGrid>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+
+	<ui:define name="row3">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<h:form id="form">
+						<p:growl id="message1" showDetail="true" />
+						<p:dataTable id="tbl" value="#{adminMB.enseignants}" var="e"
+							border="1" emptyMessage="Aucun enseignant dans la base"
+							editable="true" filteredValue="#{adminMB.enseignantsFiltres}"
+							rowKey="#{e.id}" style="width:100%">
+
+							<f:facet name="header">
+          						 Enseignants à la faculté de médecine de Sfax
+          			 				
+							</f:facet>
+
+
+							<p:columnGroup type="header">
+								<p:row>
+									<p:column rowspan="2" headerText="CIN" filterBy="#{e.cin}"
+										style="width:120px" />
+									<p:column rowspan="2" headerText="Nom" filterBy="#{e.nom}" />
+									<p:column rowspan="2" headerText="Prénom"
+										filterBy="#{e.prenom}" />
+									<p:column rowspan="2" headerText="Grade" filterBy="#{e.grade}" />
+									<p:column rowspan="2" headerText="Affiliation"
+										filterBy="#{e.affiliation}" />
+									<p:column rowspan="2" headerText="Email" style="width:20%" />
+									<p:column colspan="2" headerText="Comité (*)"
+										style="width:130px" />
+									<p:column rowspan="2" style="width:35px" exportable="false" />
+									<p:column rowspan="2" style="width:50px" exportable="false" />
+								</p:row>
+								<p:row>
+									<p:column headerText="M" />
+									<p:column headerText="P" />
+								</p:row>
+							</p:columnGroup>
+
+
+
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.cin}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{e.cin}" style="width:100%"
+											required="true" requiredMessage="Cin requis"
+											converterMessage="Cin invalide" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.nom}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{e.nom}" style="width:100%"
+											required="true" requiredMessage="Nom requis" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.prenom}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{e.prenom}" style="width:100%"
+											required="true" requiredMessage="Prénom requis" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.grade}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{e.grade}" style="width:100%"
+											required="true" requiredMessage="Grade requise" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.affiliation}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{e.affiliation}" style="width:100%"
+											required="true" requiredMessage="Affiliation requise" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Email" style="width:20%">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.mail}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="mail" value="#{e.mail}" style="width:100%"
+											required="true" validatorMessage="Format d'email invalide"
+											requiredMessage="Email requise">
+											<f:validateRegex
+												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.membre_comite}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:selectBooleanCheckbox value="#{e.membre_comite}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{e.president_comite}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:selectBooleanCheckbox value="#{e.president_comite}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:ajax event="rowEdit" listener="#{adminMB.modifierEnseignant}"
+								update=":form:tbl  :form:message1" />
+							<p:ajax event="rowEditCancel" />
+
+							<p:column style="width:35px" exportable="false">
+								<p:rowEditor />
+							</p:column>
+
+							<p:column style="width:50px" exportable="false">
+								<p:commandLink update=":form" title="Supp"
+									actionListener="#{adminMB.supprimerEnseignant(e.id)}">
+									<p:graphicImage value="/resources/img/ad.png"
+										style="width:30px;height:auto" />
+									<p:confirm header="Suppression"
+										message="Confirmer la suppression?" icon="ui-icon-alert" />
+								</p:commandLink>
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="Oui" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Non" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-cancel"
+										style="float:right !important" />
+								</p:confirmDialog>
+							</p:column>
+
+							<f:facet name="footer">
+        					 #{adminMB.enseignants.size()} enseignant(s) en total.
+   				 			</f:facet>
+						</p:dataTable>
+
+						<script type="text/javascript">
+    $('input.ui-column-filter').attr('placeholder','Rechercher');
+</script>
+						<p:spacer height="20" />
+						<p style="font-size: 1.1em !important;">
+							<STRONG> Comité * :</STRONG>
+							<p:spacer width="20" />
+							<STRONG>M :</STRONG> Membre
+							<p:spacer width="30" />
+							<STRONG>P :</STRONG> Président
+
+						</p>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,484 @@
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/template/template1.xhtml">
+
+	<h:head>
+		<meta charset="utf-8" />
+	</h:head>
+
+	<ui:define name="row0">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<ui:include src="/WEB-INF/template/identite.xhtml" />
+				<ul class="nav navbar-nav" style="margin-left: 0px">
+					<li><p:link outcome="enshome" value="Accueil" /></li>
+					<li><p:link outcome="/pages/auth/ecos" value="L'ecos" /></li>
+					<li><p:link outcome="/pages/auth/contact" value="Contact" /></li>
+					<li><p:link outcome="ensProfile" value="Profile" /></li>
+				</ul>
+			</div>
+		</nav>
+	</ui:define>
+
+
+	<ui:define name="row1">
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="nav navbar-nav2">
+					<li><p:link outcome="ajoutStation" value="Déposer une station"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="gererStation" value="Vos stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);" /></li>
+					<li><p:link outcome="choixExamens" value="Les examens"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duJury}" /></li>
+					<li><p:link outcome="lisStations" value="Les stations"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duJury or enseignMB.duComite}" /></li>
+					<li><p:link outcome="epreuves" value="Les résultats"
+							style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.59);"
+							rendered="#{enseignMB.duComite}" /></li>
+				</ul>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="row2">
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<hr />
+					<h2 class="intro-text text-center">Déposer une nouvelle
+						station</h2>
+					<hr />
+					<h:form id="form1">
+						<p:growl id="message1" showDetail="true" />
+						<p:tabView activeIndex="#{enseignMB.activeIndex}" id="tabv">
+							<p:tab id="ident" title="Identification">
+								<p:panelGrid cellspacing="20" styleClass="noBorders">
+									<p:row>
+										<p:column>
+											<p:selectOneMenu id="console"
+												value="#{enseignMB.station.domaine}"
+												style="width:203px;padding-right:0px" required="true"
+												requiredMessage="Domaine requis">
+												<f:selectItem itemLabel="Selectionner un domaine"
+													itemValue="" />
+												<f:selectItem itemLabel="M : Spécialités médicales"
+													itemValue="M" />
+												<f:selectItem itemLabel="C : Spécialités chirurgicales"
+													itemValue="C" />
+												<f:selectItem itemLabel="P : Pédiatrie" itemValue="P" />
+												<f:selectItem itemLabel="G : Gynécologie-obstétrique"
+													itemValue="G" />
+											</p:selectOneMenu>
+											<p:message for="console" />
+										</p:column>
+										<p:column>
+											<p:selectOneMenu id="console1"
+												value="#{enseignMB.station.systeme}"
+												style="width:203px;padding-right:0px" required="true"
+												requiredMessage="Système requis">
+												<f:selectItem itemLabel="Selectionner un système"
+													itemValue="" />
+												<f:selectItem itemLabel="A : Général" itemValue="A" />
+												<f:selectItem
+													itemLabel="B : Sang,système hématopoïétique,lymphatique,rate"
+													itemValue="B" />
+												<f:selectItem itemLabel="D : Digestif" itemValue="D" />
+												<f:selectItem itemLabel="F : Œil" itemValue="F" />
+												<f:selectItem itemLabel="H : Oreille" itemValue="H" />
+												<f:selectItem itemLabel="K : Circulatoire" itemValue="K" />
+												<f:selectItem itemLabel="L : Ostéoarticulaire" itemValue="L" />
+												<f:selectItem itemLabel="N : Neurologique" itemValue="N" />
+												<f:selectItem itemLabel="R : Respiratoire" itemValue="R" />
+												<f:selectItem itemLabel="P : Psychologique" itemValue="P" />
+												<f:selectItem itemLabel="S : Cutané" itemValue="S" />
+												<f:selectItem itemLabel="T : Endocrine et métabolique"
+													itemValue="T" />
+												<f:selectItem itemLabel="U : Urologique" itemValue="U" />
+												<f:selectItem itemLabel="W : Grossesse et planning familial"
+													itemValue="W" />
+												<f:selectItem itemLabel="X : Génital féminin" itemValue="X" />
+												<f:selectItem itemLabel="Y : Génital masculin" itemValue="Y" />
+												<f:selectItem itemLabel="Z : Problème sociaux" itemValue="Z" />
+											</p:selectOneMenu>
+											<p:message for="console1" />
+										</p:column>
+										<p:column>
+											<p:inputText id="plainte"
+												value="#{enseignMB.station.plainte}" required="true"
+												requiredMessage="Plainte requise" />
+											<p:watermark for="plainte" value="Plainte" id="watermark" />
+											<p:message for="plainte" />
+
+											<!--  
+											<p:selectOneMenu id="plainte1"
+												value="#{enseignMB.station.plainte}"
+												style="width:203px;padding-right:0px" filter="true"
+												filterMatchMode="startsWith" required="true"
+												requiredMessage="Plainte requise">
+												<f:selectItem itemLabel="Selectionner une plainte"
+													itemValue="" />
+											</p:selectOneMenu>
+											<p:message for="plainte1" />-->
+										</p:column>
+										<p:column>
+											<p:selectOneMenu id="sim"
+												value="#{enseignMB.station.simulation}"
+												style="padding-right:0px;width:203px;" required="true"
+												requiredMessage="Choix requis">
+												<f:selectItem itemLabel="Avec simulation?"
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItem itemLabel="Oui" itemValue="#{true}" />
+												<f:selectItem itemLabel="Non" itemValue="#{false}" />
+											</p:selectOneMenu>
+											<p:message for="sim" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<p:inputText id="Obj"
+												value="#{enseignMB.station.moyenSimulation}" required="true"
+												requiredMessage="Objets requis" />
+											<p:watermark for="Obj" value="Objets" id="watermark2" />
+											<p:message for="Obj" />
+										</p:column>
+										<p:column>
+											<p:selectCheckboxMenu id="menu"
+												value="#{enseignMB.competences}" label="Compétences"
+												filter="true" filterMatchMode="startsWith"
+												style="width:203px;" required="true"
+												requiredMessage="Compétence(s) requise(s)">
+												<f:selectItem itemLabel="
+												H : Histoire"
+													itemValue="H" />
+												<f:selectItem itemLabel="E : Examen physique" itemValue="E" />
+												<f:selectItem itemLabel="P : Habilités Psychomotrices"
+													itemValue="P" />
+												<f:selectItem itemLabel="I : Investigation" itemValue="I" />
+												<f:selectItem itemLabel="D : Diagnostic" itemValue="D" />
+												<f:selectItem itemLabel="C : Communication" itemValue="C" />
+												<f:selectItem itemLabel="O : Organisation" itemValue="O" />
+											</p:selectCheckboxMenu>
+											<p:message for="menu" />
+										</p:column>
+										<p:column>
+											<p:selectOneMenu id="console2"
+												value="#{enseignMB.station.contexte}"
+												style="width:203px;padding-right:0px" required="true"
+												requiredMessage="Contexte requis">
+												<f:selectItem itemLabel="Selectionner un contexte"
+													itemValue="" />
+												<f:selectItem itemLabel="U : Urgence" itemValue="U" />
+												<f:selectItem itemLabel="C : Consultation" itemValue="C" />
+												<f:selectItem
+													itemLabel="A : Accident publique/domestique/travail"
+													itemValue="A" />
+											</p:selectOneMenu>
+											<p:message for="console2" />
+										</p:column>
+										<p:column>
+											<p:selectCheckboxMenu id="menu1"
+												value="#{enseignMB.idAuteurs}" label="liste des auteurs"
+												filter="true" filterMatchMode="startsWith"
+												panelStyle="width:280px" style="width:203px" required="true"
+												requiredMessage="Liste d'auteurs requise">
+												<f:selectItems value="#{enseignMB.enseignantsList}" var="eg"
+													itemLabel="#{eg.nom} #{eg.prenom} ( cin : #{eg.cin} )"
+													itemValue="#{eg.id}" />
+											</p:selectCheckboxMenu>
+											<p:message for="menu1" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column colspan="4">
+											<p:inputTextarea id="sitC" rows="3" cols="106"
+												value="#{enseignMB.station.situationClinique}"
+												required="true" requiredMessage="Situation clinique requise" />
+											<p:watermark for="sitC" value="Situation clinique"
+												id="watermark3" />
+											<p:message for="sitC" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column colspan="4">
+											<p:inputTextarea id="instC" rows="6" cols="106"
+												value="#{enseignMB.station.instrucCandidat}" required="true"
+												requiredMessage="Instructions aux candidats requises" />
+											<p:watermark for="instC" value="Instructions aux candidats"
+												id="watermark4" />
+											<p:message for="instC" />
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+								<p:commandButton value="Suivant" style="float:right"
+									icon="ui-icon-arrowthick-1-e" action="#{enseignMB.suivant(1)}"
+									update=":form1" />
+							</p:tab>
+
+							<p:tab id="ps" title="Patient simulé">
+								<h:panelGrid columns="2" cellpadding="5">
+									<p:inputTextarea id="instP" rows="10" cols="106"
+										value="#{enseignMB.station.instrucPS}" />
+									<p:watermark for="instP" value="Instructions au patient simulé"
+										id="watermark5" />
+								</h:panelGrid>
+								<p:commandButton value="Suivant" style="float:right"
+									icon="ui-icon-arrowthick-1-e" action="#{enseignMB.suivant(2)}"
+									update=":form1" />
+								<p:commandButton value="Précédent"
+									style="float:left;margin-top:5px" icon="ui-icon-arrowthick-1-w"
+									action="#{enseignMB.suivant(0)}" update=":form1" />
+							</p:tab>
+
+							<p:tab id="mo" title="Médecin observateur">
+								<h:panelGrid columns="2" cellpadding="5">
+									<p:inputTextarea id="instM" rows="10" cols="106"
+										value="#{enseignMB.station.instrucMO}" />
+									<p:watermark for="instM"
+										value="Instructions au médecin observateur" id="watermark6" />
+								</h:panelGrid>
+								<p:commandButton value="Suivant" style="float:right"
+									icon="ui-icon-arrowthick-1-e" action="#{enseignMB.suivant(3)}"
+									update=":form1" />
+								<p:commandButton value="Précédent"
+									style="float:left;margin-top:5px" icon="ui-icon-arrowthick-1-w"
+									action="#{enseignMB.suivant(1)}" update=":form1" />
+							</p:tab>
+
+							<p:tab id="info" title="Informations additionnelles">
+								<h:panelGrid columns="2" cellpadding="5">
+									<p:inputTextarea id="mat" rows="10" cols="106"
+										value="#{enseignMB.station.materiel}" />
+									<p:watermark for="mat" value="Matériel à préparer"
+										id="watermark7" />
+									<h:form>
+										<h:outputText
+											value="Joindre un fichier (gif,jpg,png,pdf,docx): " />
+										<p:fileUpload
+											fileUploadListener="#{enseignMB.handleFileUpload}"
+											mode="advanced" update="messages" auto="true"
+											allowTypes="/(\.|\/)(gif|jpe?g|png|doc?x|pdf)$/" />
+										<p:growl id="messages" showDetail="true" />
+									</h:form>
+									<p:spacer />
+									<p:inputText id="nbObj" value="#{enseignMB.nbObjectifs}"
+										style="margin-bottom:10px;margin-top:10px"
+										onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+										>
+									</p:inputText>
+									<p:watermark for="nbObj" value="Nombre d'objectifs"
+										id="watermark10" />
+									<p:message for="nbObj" />
+								</h:panelGrid>
+
+								<p:commandButton value="Suivant" style="float:right"
+									icon="ui-icon-arrowthick-1-e"
+									action="#{enseignMB.verifStation(4)}" update=":form1" />
+								<p:commandButton value="Précédent"
+									style="float:left;margin-top:5px" icon="ui-icon-arrowthick-1-w"
+									action="#{enseignMB.suivant(2)}" update=":form1" />
+							</p:tab>
+
+							<p:tab id="confirm1" title="Confirmation"
+								rendered="#{enseignMB.verif}">
+								<p:panelGrid id="confirmation"
+									style="margin:0px auto;width:100%;margin-bottom:30px;margin-top:30px">
+									<p:row>
+										<p:column style="width:20%">
+											<strong> Domaine: </strong>
+										</p:column>
+										<p:column>
+											<h:outputText value="#{enseignMB.station.domaine}" />
+										</p:column>
+										<p:column style="width:15%">
+											<strong> Système: </strong>
+										</p:column>
+										<p:column>
+											<h:outputText value="#{enseignMB.station.systeme}" />
+										</p:column>
+										<p:column style="width:15%">
+											<strong> Plainte: </strong>
+										</p:column>
+										<p:column>
+											<h:outputText value="#{enseignMB.station.plainte}" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<strong> Simulation: </strong>
+										</p:column>
+										<p:column>
+											<h:outputText value="#{enseignMB.station.simulation}" />
+										</p:column>
+										<p:column>
+											<strong> Objets: </strong>
+										</p:column>
+										<p:column>
+											<h:outputText value="#{enseignMB.station.moyenSimulation}" />
+										</p:column>
+										<p:column>
+											<strong> Contexte: </strong>
+										</p:column>
+										<p:column>
+											<h:outputText value="#{enseignMB.station.contexte}" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<strong> Compétences: </strong>
+										</p:column>
+										<p:column colspan="5">
+											<p:dataList value="#{enseignMB.competences}" var="a"
+												styleClass="datalist-noborder"
+												emptyMessage="Aucune compétence">
+											#{a}
+    									</p:dataList>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column colspan="6" styleClass="ui-widget-header">
+											<p:spacer height="0" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<strong> Auteurs: </strong>
+										</p:column>
+										<p:column colspan="5">
+											<p:dataList value="#{enseignMB.enseigns}" var="a"
+												styleClass="datalist-noborder" emptyMessage="Aucun auteur">
+   											 #{a.nom} #{a.prenom} ( cin : #{a.cin} )
+    									</p:dataList>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<strong> Situation clinique </strong>
+										</p:column>
+										<p:column colspan="5">
+											<h:outputText value="#{enseignMB.station.situationClinique}"
+												styleClass="outputLabel" style="white-space: pre-wrap" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column colspan="6" styleClass="ui-widget-header">
+											<p:spacer height="0" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<strong> Instructions au candidat: </strong>
+										</p:column>
+										<p:column colspan="5">
+											<p:commandLink value="Afficher" type="button"
+												onclick="PF('dlg1').show();"
+												style="text-decoration: underline;" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<strong> Instructions au patient: </strong>
+										</p:column>
+										<p:column colspan="5">
+											<p:commandLink value="Afficher" type="button"
+												onclick="PF('dlg2').show();"
+												style="text-decoration: underline;" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<strong> Instructions au médecin: </strong>
+										</p:column>
+										<p:column colspan="5">
+											<p:commandLink value="Afficher" type="button"
+												onclick="PF('dlg3').show();"
+												style="text-decoration: underline;" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column colspan="6" styleClass="ui-widget-header">
+											<p:spacer height="0" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<strong> Matériel à préparer: </strong>
+										</p:column>
+										<p:column colspan="5">
+											<h:outputText value="#{enseignMB.station.materiel}"
+												styleClass="outputLabel" style="white-space: pre-wrap" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<strong> Fichier: </strong>
+										</p:column>
+										<p:column colspan="5">
+											<p:commandLink
+												value="Télécharger #{enseignMB.station.fichier_joint.fileName}"
+												ajax="false" style="text-decoration: underline;"
+												rendered="#{enseignMB.station.fichier_joint ne null}">
+												<p:fileDownload
+													value="#{enseignMB.fileDownload(enseignMB.station.fichier_joint)}" />
+											</p:commandLink>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<strong> Nombre d'objectifs: </strong>
+										</p:column>
+										<p:column colspan="5">
+											<h:outputText value="#{enseignMB.nbObjectifs}" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column colspan="6" styleClass="ui-widget-header">
+											<p:spacer height="0" />
+										</p:column>
+									</p:row>
+
+								</p:panelGrid>
+
+								<p:dialog header="Instructions aux candidats" widgetVar="dlg1"
+									modal="true" position="center center" resizable="false"
+									width="900px" height="550px">
+									<h:outputText value="#{enseignMB.station.instrucCandidat}"
+										style="white-space: pre-wrap" />
+								</p:dialog>
+								<p:dialog header="Instructions aux patients simulés"
+									widgetVar="dlg2" modal="true" position="center center"
+									resizable="false" width="900px" height="550px">
+									<h:outputText value="#{enseignMB.station.instrucPS}"
+										style="white-space: pre-wrap" />
+								</p:dialog>
+								<p:dialog header="Instructions aux médecins observateurs"
+									widgetVar="dlg3" modal="true" position="center center"
+									resizable="false" width="900px" height="550px">
+									<h:outputText value="#{enseignMB.station.instrucMO}"
+										style="white-space: pre-wrap" />
+								</p:dialog>
+
+
+								<p:commandButton value="Remplir la grille"
+									action="#{enseignMB.saveStation()}" style="float:right"
+									icon="ui-icon-check" update=":form1:message1 :form1" />
+
+							</p:tab>
+							
+						</p:tabView>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
